@@ -2,7 +2,7 @@
 #
 # All namespaces must have the "istio-enjection" label set to "enabled"
 #
-# @kinds ""/Namespace 
+# @kinds /Namespace 
 package istion_injection_enabled
 
 import data.lib.core
