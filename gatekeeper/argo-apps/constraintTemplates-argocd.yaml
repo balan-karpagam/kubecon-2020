@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gatekeeper-constraint-templates
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: gatekeeper/constraintTemplates
+    repoURL: https://github.com/balan-karpagam/kubecon-2020.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
