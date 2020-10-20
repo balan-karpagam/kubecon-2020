@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gatekeeper
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-4"
+spec:
+  destination:
+    namespace: gatekeeper-system
+    server: https://kubernetes.default.svc
+  ignoreDifferences:
+  - group: apiextensions.k8s.io
+    jsonPointers:
+    - /status
+    kind: CustomResourceDefinition
+  - group: admissionregistration.k8s.io
+    jsonPointers:
+    - /webhooks/0/clientConfig/caBundle
+    - /webhooks/1/clientConfig/caBundle
+    - /webhooks/0/failurePolicy
+    - /webhooks/1/failurePolicy
+    kind: ValidatingWebhookConfiguration
+  project: default
+  source:
+    path: gatekeeper/
+    repoURL: https://github.com/balan-karpagam/kubecon-2020.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
