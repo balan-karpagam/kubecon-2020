@@ -56,75 +56,23 @@ spec:
       missing_field(obj, field) = true {
           not has_field(obj, field)
       }
-    - |-
-      package lib.pods
-
-      import data.lib.core
-
-      default pod = false
-
-      pod = core.resource.spec.template {
-          pod_templates := ["daemonset","deployment","job","replicaset","replicationcontroller","statefulset"]
-          lower(core.kind) == pod_templates[_]
-      }
-
-      pod = core.resource {
-          lower(core.kind) == "pod"
-      }
-
-      pod = core.resource.spec.jobTemplate.spec.template {
-          lower(core.kind) == "cronjob"
-      }
-
-      containers[container] {
-          keys = {"containers", "initContainers"}
-          all_containers = [c | keys[k]; c = pod.spec[k][_]]
-          container = all_containers[_]
-      }
-
-      volumes[volume] {
-          volume = pod.spec.volumes[_]
-      }
-    - |-
-      package lib.security
-
-      dropped_capability(container, cap) {
-          lower(container.securityContext.capabilities.drop[_]) == lower(cap)
-      }
-
-      dropped_capability(psp, cap) {
-          lower(psp.spec.requiredDropCapabilities[_]) == lower(cap)
-      }
-
-      added_capability(container, cap) {
-          lower(container.securityContext.capabilities.add[_]) == lower(cap)
-      }
-
-      added_capability(psp, cap) {
-          lower(psp.spec.allowedCapabilities[_]) == lower(cap)
-      }
-
-      added_capability(psp, cap) {
-          lower(psp.spec.defaultAddCapabilities[_]) == lower(cap)
-      }
     rego: |-
-      package istion_injection_enabled
+      package main
 
       import data.lib.core
-      import data.lib.pods
-      import data.lib.security
 
       policyID := "P1005"
 
       violation[msg] {
-          core.kind == "Namespace"
-          not core.labels["istio-injection"]
-          msg = core.format_with_id(sprintf("Namespace  %s does not have istio injection label", [core.name]), policyID)
+        core.kind = "Namespace"
+        not core.labels["istio-injection"]
+        msg = core.format_with_id(sprintf("Namespace  %s does not have istio injection label", [core.name]), policyID)
       }
 
+
       violation[msg] {
-          core.kind == "Namespace"
-          not core.labels["istio-injection"] == "enabled"
+          core.kind = "Namespace"
+          not core.labels["istio-injection"] = "enabled"
           msg = core.format_with_id(sprintf("Namespace  %s does not have istio enabled", [core.name]), policyID)
       }
     target: admission.k8s.gatekeeper.sh
