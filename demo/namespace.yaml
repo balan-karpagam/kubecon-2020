@@ -4,3 +4,4 @@ metadata:
   name: no-istio
   labels:
     istio-injection: "enabled"
+    key: value
