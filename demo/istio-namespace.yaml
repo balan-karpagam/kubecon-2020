@@ -1,6 +1,6 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: istioEnabled
+  name: istio-enabled
   labels:
     istio-injection: "enabled"
