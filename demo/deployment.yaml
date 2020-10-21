@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-kubernetes
+  namespace: default
   labels:
     app.kubernetes.io/name: mysql
     app.kubernetes.io/version: "5.7.21"
