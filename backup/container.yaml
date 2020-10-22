@@ -22,6 +22,6 @@ spec:
       containers:
       - name: hello-kubernetes
 ######### Deny Admission if image uses latest tag ################
-        image: paulbouwer/hello-kubernetes:1.5
+        image: paulbouwer/hello-kubernetes:latest #1.5
         ports:
         - containerPort: 8080
