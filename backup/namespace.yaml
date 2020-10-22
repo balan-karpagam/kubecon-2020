@@ -3,5 +3,5 @@ kind: Namespace
 metadata:
 ####### Deny admission if instio-injection is not enabled
 #  labels:
-#    istion-injection: enabled
+#    istio-injection: enabled
   name: no-istio
