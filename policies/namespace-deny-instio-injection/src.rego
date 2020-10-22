@@ -4,7 +4,7 @@
 #
 # @kinds /Namespace 
 
-package main
+package namespaceDenyIstioInjection
 
 import data.lib.core
 
