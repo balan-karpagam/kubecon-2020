@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+####### Deny admission if instio-injection is not enabled
+  labels:
+    istio-injection: enabled
+  name: no-istio
