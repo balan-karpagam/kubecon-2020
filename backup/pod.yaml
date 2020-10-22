@@ -7,16 +7,15 @@ spec:
   - name: hello
     image: busybox
     command: ['sh', '-c', 'echo "Hello, Kubernetes!" && sleep 3600']
-########################33
-#    securityContext:
+    securityContext:
 ####### Deny admission if privileed is set to true
-#      privileged: true
+      privileged: true
 ####### Deny admission if nonroot is not set to true
 #      runAsNonRoot: true
 ####### Deny admission if resources are not set
-    resources:
-      limits:
-        cpu: "300m"
-        memory: "4000Mi"
+#    resources:
+#      limits:
+#        cpu: "300m"
+#        memory: "4000Mi"
 ####### Deny admission if hostnetwork is set to true
-#  hostNetwork: true
+  hostNetwork: true
